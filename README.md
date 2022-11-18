@@ -1,36 +1,51 @@
-Telegram бот для учёта личных расходов и ведения бюджета, [видео с пояснениями по коду и описание](https://www.youtube.com/watch?v=Kh16iosOTIQ).
+Telegram for personal expenses collecting 
 
+Complete ENV variables (above) into Dockerfile.
+`TELEGRAM_API_TOKEN` — Bot API token 
 
-В переменных окружения надо проставить API токен бота, а также адрес proxy и логин-пароль к ней.
+`TELEGRAM_ACCESS_ID` — ID of Telegram account working available
 
-`TELEGRAM_API_TOKEN` — API токен бота
-
-`TELEGRAM_PROXY_URL` — URL прокси сервера
-
-`TELEGRAM_PROXY_LOGIN` — логин прокси сервера
-
-`TELEGRAM_PROXY_PASSWORD` — пароль прокси сервера
-
-`TELEGRAM_ACCESS_ID` — ID Telegram аккаунта, от которого будут приниматься сообщения (сообщения от остальных аккаунтов игнорируются)
-
-Использование с Docker показано ниже. Предварительно заполните ENV переменные, указанные выше, в Dockerfile, а также в команде запуска укажите локальную директорию с проектом вместо `local_project_path`. SQLite база данных будет лежать в папке проекта `db/finance.db`.
+ 
+SQLite db in `expense.db`.
 
 ```
-docker build -t tgfinance ./
-docker run -d --name tg -v /local_project_path/db:/home/db tgfinance
+docker build -t soexpense ./
+docker run -d --name so soexpense
 ```
 
-Чтобы войти в работающий контейнер:
+Enter into running container:
 
 ```
-docker exec -ti tg bash
+docker exec -ti so bash
 ```
 
-Войти в контейнере в SQL шелл:
+Enter into SQL shell inside of Docker container:
 
 ```
-docker exec -ti tg bash
-sqlite3 /home/db/finance.db
+docker exec -ti so bash
+sqlite3 /home/expenses.db
 ```
+DOCKER HUB
 
+1) Login to the docker.
+```
+docker login -u serhiiovd
+```
+2) Tag your image build
+
+my image name here is : soexpense and by default it has tag : latest
+and my username is : serhiiovd as registered with docker cloud, and I created a public repository named : repo
+
+so my personal repository becomes now : serhiiovd/repo and I want to push my image with tag : soexpense
+
+I tagged as below :
+```
+docker tag soexpense:latest serhiiovd/repo:soexpense
+```
+3) Pushed the image to my personal docker repository as below
+```
+docker push serhiiovd/repo:soexpense
+```
+And it successfully pushed to my personal docker repo.
+```
 
